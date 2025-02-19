@@ -1,0 +1,118 @@
+/*class Program1
+{
+
+    static void Main()
+    {
+        Console.WriteLine("Please input your name");
+        string Name = Console.ReadLine();
+        Console.WriteLine("Please input your age");
+        int age = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine($"Hello {Name}, the next year you will be {age + 1} years old");
+    }
+}*/
+
+/*class Program2
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input the first number");
+        sbyte a = Convert.ToSByte(Console.ReadLine());
+        Console.WriteLine("Please input the second number");
+        byte b = Convert.ToByte(Console.ReadLine());
+        int c = a + b;
+        Console.WriteLine("The sum is" +  " " + c);
+        Console.WriteLine("The difference is " + " " + (a - b));
+        var h = (decimal)a / b;
+        Console.WriteLine("The division is" + " " + h);
+
+        int d = Convert.ToInt32(Console.ReadLine());
+        int e = Convert.ToInt32(Console.ReadLine());
+
+        byte f = (byte)(d + e);
+        Console.WriteLine("Sum as byte" + " " + f);
+        decimal m = (decimal)d / e;
+        Console.WriteLine("Division as decimal" + " " + m);
+    }
+}*/
+
+/*class Program3
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input a number");
+        int num = int.Parse(Console.ReadLine());
+
+        if (num >= 0)
+        {
+            if (num % 2 == 0)
+            {
+                Console.WriteLine("The number is odd");
+            }
+            else
+            {
+                Console.WriteLine("The number is even");
+            }
+        }
+        else
+        {
+            Console.WriteLine("The number is negative");
+        }
+    }
+}*/
+
+/*class Program4
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input your name");
+        string Name = Console.ReadLine();
+        Console.WriteLine("Please input your age");
+        int age = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine($"Hello {Name}, the next year you will be {age + 1} years old");
+        if (age >= 18)
+        {
+            Console.WriteLine("You are adult");
+        }
+        else
+        {
+            Console.WriteLine("You are tennager");
+        }
+    }
+}*/
+
+/*class Program5
+{
+    static void Main()
+    {
+        int[] ages = new int[3];
+        string[] names = new string[3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            Console.WriteLine($"Please input names of {i + 1} student");
+            names[i] = Console.ReadLine();
+            Console.WriteLine("Please input his/her age");
+            ages[i] = int.Parse( Console.ReadLine());
+
+        }
+
+
+        Console.WriteLine("If you want to show enter 1, if not enter 0");
+        int flag = int.Parse(Console.ReadLine());
+
+        if (flag == 1)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                string result = (ages[i] > 18) ? $"{names[i]} you are {ages[i]} years old and you are adult" : $"{names[i]} you are {ages[i]} years old and you are teenager";
+                Console.WriteLine(result);
+            }
+        }
+        else if (flag == 0)
+        {
+            Console.WriteLine("You can not see abilities");
+        }
+
+
+    }
+}*/
