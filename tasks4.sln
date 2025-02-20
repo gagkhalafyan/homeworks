@@ -1,22 +1,270 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tasks4", "tasks4\tasks4.csproj", "{0B771486-0B7A-4B63-BBA9-F93C42407B02}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0B771486-0B7A-4B63-BBA9-F93C42407B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B771486-0B7A-4B63-BBA9-F93C42407B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B771486-0B7A-4B63-BBA9-F93C42407B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B771486-0B7A-4B63-BBA9-F93C42407B02}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+//task1
+/*public class Student
+{
+    public string Name { get; set; }
+    public double gradeLevel { get; set; }
+    public int StudentId { get; set; }
+
+    public void ShowStudentInfo()
+    {
+        Console.WriteLine($"Student Name is {this.Name}");
+        Console.WriteLine($"His Id is {this.StudentId}");
+        Console.WriteLine($"His Grade is {this.gradeLevel}");
+    }
+
+}
+class Program
+{
+    static void Main()
+    {
+        Student[] student = new Student[3];
+        for (int i = 0; i < 3; i++)
+        {
+            student[i] = new Student();
+            Console.WriteLine($"Please input the {i + 1} student Name");
+            student[i].Name = Console.ReadLine();
+            Console.WriteLine("Please input His Id");
+            student[i].StudentId = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please input his grade0");
+            student[i].gradeLevel = Convert.ToDouble(Console.ReadLine());
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            student[i].ShowStudentInfo();
+        }
+    }
+}*/
+
+//Task 2: Flight Reservation System
+
+/*public class FlightTicket
+{
+    public string passengerName;
+    public int flightNumber;
+    public int seatNumber;
+    public FlightTicket(string name,int number,int seat)
+    {
+        this.passengerName = name;
+        this.flightNumber = number;
+        this.seatNumber = seat;
+    }
+    static void Main()
+    {
+        FlightTicket ticket1 = new FlightTicket("Aram",4,11);
+        FlightTicket ticket2 = new FlightTicket("Hayk", 4, 12);
+        FlightTicket ticket3 = new FlightTicket("Armen", 4, 13);
+        Console.Write(ticket1.passengerName + " " + ticket1.flightNumber + " " + ticket1.seatNumber);
+        Console.WriteLine();
+        Console.Write(ticket2.passengerName + " " + ticket2.flightNumber + " " + ticket2.seatNumber);
+        Console.WriteLine();
+        Console.Write(ticket3.passengerName + " " + ticket3.flightNumber + " " + ticket3.seatNumber);
+
+    }
+}*/
+
+//Task 3: File Download Simulation
+
+/*public class FileDownload
+{
+    public FileDownload()
+    {
+        Console.WriteLine("The File is downloading");
+    }
+
+    ~FileDownload()
+    {
+        Console.WriteLine("Download Completed");
+    }
+
+    static void Main()
+    {
+        FileDownload file = new FileDownload();
+    }
+}*/
+
+//task4
+/*public class WeatherReport
+{
+    public double temperature { get; set; }
+    public int humidity { get; set; }
+    public string weatherCondition { get; set; }
+
+    static void Main()
+    {
+        WeatherReport[] city = new WeatherReport[3];
+        string[] cityNames = new string[3] { "Moscow", "London", "Yerevan" };
+
+        for (int i = 0; i < 3; i++)
+        {   
+
+            city[i] = new WeatherReport();
+            Console.WriteLine($"Please input temperature for {cityNames[i]}");
+            city[i].temperature = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Please input humidity ");
+            city[i].humidity = int.Parse(Console.ReadLine());
+            Console.WriteLine("Please input weather condition");
+            city[i].weatherCondition = Console.ReadLine();
+        }
+        
+        for(int i = 0; i < 3; ++i)
+        {
+            Console.WriteLine("details for cities");
+            Console.WriteLine(city[i].temperature + " " + city[i].humidity + " " + city[i].weatherCondition);
+          
+        }
+    }
+}*/
+
+//Task 5
+
+/*public class SmartWatch
+{
+    public string ownerName;
+    public int stepCount;
+    public SmartWatch()
+    {
+        this.stepCount = 0;
+        this.ownerName = "unknown";
+    }
+    public void AddSteps(int steps)
+    {
+        this.stepCount = this.stepCount + steps;
+      
+    }
+
+    public void ShowSteps()
+    {
+        Console.WriteLine($"{this.stepCount}");
+    }
+
+    static void Main()
+    {
+        SmartWatch watch = new SmartWatch();
+        watch.AddSteps(6230);
+        watch.ShowSteps();
+    }
+}*/
+
+//Task 6
+
+/*public class Movie
+{
+    private int _rating;
+    
+    public int Rating
+    {
+        set
+        {
+            if (value < 1 || value >5)
+            {
+                Console.WriteLine("Invalid value");
+            }
+            else
+            {
+                _rating = value;
+                Console.WriteLine($"{value}");
+            }
+        }
+        get { return _rating; }
+    }
+    static void Main()
+    {
+        Movie movie = new Movie();
+        movie.Rating = 2;
+    }
+
+    }*/
+
+//Task 8
+
+/*public class Product
+{
+    public string name;
+    public double price;
+    public int stockQuantity;
+
+    public Product(string name, double price, int quantity)
+    {
+        this.name = name;
+        this.price = price;
+        this.stockQuantity = quantity;
+    }
+
+    static void Main()
+    {
+        Product product = new Product("BMW",12500.5,5);
+        Product product1 = new Product("Mercedes", 25000.25, 3);
+        Console.WriteLine(product.name + " " + product.price + " " + product.stockQuantity);
+        Console.WriteLine(product1.name + " " + product1.price + " " + product1.stockQuantity);
+
+    }
+}*/
+
+
+//Task 9
+
+/*public partial class Character
+{
+    public string CharacterName { get; set; }
+    public int level { get; set; }
+}
+
+public partial class Character
+{
+    public void ShowCharacterInfo()
+    {
+        Console.WriteLine(this.CharacterName);
+        Console.WriteLine(this.level);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Character ch = new Character();
+
+        ch.CharacterName = "Hero";
+        ch.level = 5;
+
+        ch.ShowCharacterInfo();
+    }
+}*/
+
+//task 10
+
+public class Course
+{
+
+    public string courseName { get; set; }
+    public string instructor { get; set; }
+    public int maxStudents { get; set; }
+    public Course(string name, string instructorName, int max)
+    {
+        this.courseName = name;
+        this.instructor = instructorName;
+        this.maxStudents = max;
+    }
+    public void ShowCourseDetails()
+    {
+        Console.WriteLine($"Course Name: {this.courseName}");
+        Console.WriteLine($"Instructor: {this.instructor}");
+        Console.WriteLine($"Maximum Students: {this.maxStudents}");
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        
+        Course course1 = new Course("TT319", "Smith", 30);
+        Course course2 = new Course("TT320", "Alice", 40);
+        Course course3 = new Course("TT321", "George", 50);
+
+        course1.ShowCourseDetails();
+        Console.WriteLine();  
+        course2.ShowCourseDetails();
+        Console.WriteLine();  
+        course3.ShowCourseDetails();
+    }
+}
