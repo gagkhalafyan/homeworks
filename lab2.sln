@@ -1,22 +1,345 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab2", "lab2\lab2.csproj", "{EBFD2436-7EBE-4554-AF11-8F724E5C2C32}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EBFD2436-7EBE-4554-AF11-8F724E5C2C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBFD2436-7EBE-4554-AF11-8F724E5C2C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBFD2436-7EBE-4554-AF11-8F724E5C2C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBFD2436-7EBE-4554-AF11-8F724E5C2C32}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+using System;
+using System.Net.Security;
+using System.Text;
+using Microsoft.VisualBasic;
+
+//task 1
+class Program1
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input size of array");
+        int n = int.Parse(Console.ReadLine());
+        int[] ints = new int[n];
+
+        Console.WriteLine("Please input members of array");
+        for (int i = 0; i < n; i++)
+        {
+            ints[i] = int.Parse(Console.ReadLine());
+        }
+
+        int sum = 0;
+        for (int i = 0; i < n; i++)
+        {
+            sum += ints[i];
+        }
+        Console.WriteLine($"The sum of array :{sum}");
+
+    }
+
+
+}
+
+
+//task 2
+
+/*class Program2
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input the size of matrix");
+        int n = int.Parse(Console.ReadLine());
+        int[,] ints = new int[n, n];
+        Console.WriteLine("Please input members of matrix");
+        for (int i = 0; i < ints.GetLength(0); i++)
+        {
+            for (int j = 0; j < ints.GetLength(1); j++)
+            {
+                ints[i,j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        int sum = 0;
+        for (int i = 0; i < ints.GetLength(0); i++)
+        {
+            sum += ints[i, i];
+        }
+        Console.WriteLine($"The sum is {sum}");
+    }
+}*/
+
+
+//task 3
+
+/*class Program3
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input the first array size");
+        int n = int.Parse(Console.ReadLine());
+
+        int[] arr = new int[n];
+        int[] arr2 = new int[n];
+        Console.WriteLine("Please input members of array");
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i] = int.Parse(Console.ReadLine());
+        }
+
+        int j = 0;
+        int count = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+
+            if (arr[i] % 2 == 0)
+            { 
+                arr2[j++] = arr[i];
+            }
+        }
+
+        for (int i = 0; i < j; i++)
+        {
+            Console.WriteLine(arr2[i]);
+        }
+    }
+}*/
+
+//task 4
+/*class Program4
+{
+    static void Main()
+    {
+        Console.WriteLine("Please input a string");
+        string word = Console.ReadLine();
+
+        char[] letters = word.ToCharArray();
+        for (int i = 0; i < letters.Length; i++)
+        {
+            letters[i] = Char.ToUpper(letters[i]);
+        }
+
+        string result = new string(letters);
+        Console.WriteLine("Converted string: " + result);
+    }
+}*/
+
+//task 5
+
+/*class Program5
+{
+    static void Main()
+    {
+        string[][] strings = new string[4][];
+        strings[0] = new string[] { "helloed" };
+        strings[1] = new string[] { "hel" };
+        strings[2] = new string[] { "barev" };
+        strings[3] = new string[] { "oops" };
+        for (int i = 0; i < strings.Length; i++)
+        {
+            for (int j = 0; j < strings[i].Length; j++)
+            {
+                Console.Write($"{strings[i][j]} \t");
+            }
+            Console.WriteLine();
+        }
+    }
+}*/
+
+//task6
+
+/*class Program6
+{
+
+    static void Main()
+    {
+        string word1 = "Hello";
+        string word2 = "World";
+
+
+        char[][] chars =
+        {
+            word1.ToCharArray(),
+            word2.ToCharArray(),
+        };
+
+        for (int i = 0; i < chars.Length; i++)
+        {
+
+            for (int j = 0; j < chars[i].Length; j++)
+            {
+                Console.Write(chars[i][j] + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+}*/
+
+
+//task 7
+
+/*class Program7
+{
+    static void Main()
+    {
+        ConsoleColor[][] consoleColors =
+        {
+            new ConsoleColor[] {ConsoleColor.Red, ConsoleColor.Green},
+            new ConsoleColor[] {ConsoleColor.Blue,ConsoleColor.Black, ConsoleColor.DarkBlue},
+            new ConsoleColor[] {ConsoleColor.Red,ConsoleColor.Green,ConsoleColor.Blue, ConsoleColor.DarkRed}
+        };
+
+        for (int i = 0; i < consoleColors.Length; i++)
+        {
+            for (int j = 0; j < consoleColors[i].Length; j++)
+            {
+                Console.ForegroundColor = consoleColors[i][j];
+                Console.Write(consoleColors[i][j] + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+}*/
+
+//task 8 ???
+/*class Program8
+{
+    static void Main()
+    {
+        string[][] Names =
+        {
+            new string[] {"Anna","Mathematics" },
+            new string[] {"David","Biology" },
+
+        };
+
+        DateTime[][] dateTimes = {
+            new DateTime[] {DateTime.Today},
+            new DateTime[] {DateTime.Today},
+        };
+
+        for (int i = 0; i < Names.Length; i++)
+        {
+
+            for (int j = 0; j < Names[i].Length; j++)
+            {
+                Console.Write($"{Names[i][j]} {dateTimes[i][j]}");
+            }
+            Console.WriteLine();
+        }
+    }
+}*/
+
+//task 9
+
+/*class Program9
+{
+    static void Main()
+    {
+        char[][] chars = {
+
+            new char[] { 'H','E','L','L','O' },
+            new char[] {'w','o','r','l','d' }
+        };
+        string strings1 = new string(chars[0]);
+        string strings2 = new string(chars[1]);
+
+
+
+        Console.WriteLine(strings1.Reverse().ToArray());
+        Console.WriteLine(strings2.Reverse().ToArray());
+
+
+    }
+}*/
+
+
+//Strings 
+//task 1
+
+/*class Program1
+{
+    static void Main()
+    {
+        string str = "Hello";
+        string rev = new string (str.Reverse().ToArray());
+     
+        Console.WriteLine(rev);
+    }
+}*/
+
+//task 2
+
+/*class Program2
+{
+    static void Main()
+    {
+        string str = "racecar";
+        string rev = new string (str.Reverse().ToArray());
+
+        int result = string.Compare (rev, str);
+        if(result == 0)
+        {
+            Console.WriteLine("The string is palindrome");
+        }
+        else
+        {
+            Console.WriteLine("The string is not palindrome");
+        }
+    }
+}*/
+
+/*class Program3
+{
+    static void Main()
+    {
+        string str = "Barevner";
+        char[] arr = str.ToCharArray();
+        int count = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] == 'a' || arr[i] == 'e' || arr[i] == 'i' || arr[i] == 'u' || arr[i] == 'o')
+            {
+                count++;
+            }
+        }
+        Console.WriteLine(count);
+    }
+}*/
+
+/*class Program4
+{
+    static void Main()
+    {
+        string str = "Hello world ";
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (str[i] == ' ')
+            {
+                continue;
+            }
+            Console.Write(str[i]);
+        }
+    }
+}*/
+
+//task 5
+
+/*class Program5
+{
+    static void Main()
+    {
+        string str = "banana";
+        char[] arr = str.ToCharArray();
+        int count = 0;
+        for (int i = 0; i < arr.Length; i++)
+        {
+            if (arr[i] == 'a')
+            {
+                arr[i] = '*';
+            }
+            Console.Write(arr[i]);
+        }
+    }
+}*/
+
+/*class Program6
+{
+    static void Main()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Hello");
+        sb.Append("world");
+        Console.WriteLine(sb.ToString());
+        
+    }
+}*/
