@@ -1,61 +1,27 @@
-﻿using System;
-
-/*public class Contact
-{
-    public string Name;
-    public string PhoneNumber;
-    public string Email;
-    
-    public void DisplayInfo()
-    {
-        Console.WriteLine($"{Name}");
-        Console.WriteLine($"{PhoneNumber}");
-        Console.WriteLine($"{Email}");
-    }
-}class Program
-{
-    static void Main()
-    {
-        Contact[] contacts = new Contact[3];
-        int i = 0;
-        for (i = 0; i < 3; i++)
-        {
-            contacts[i] = new Contact();
-
-            Console.WriteLine($"Enter the details for {i + 1} contact");
-            contacts[i].Name = Console.ReadLine();
-            contacts[i].PhoneNumber = Console.ReadLine();
-            contacts[i].Email = Console.ReadLine();
-        }
-        Console.WriteLine("Please write contact name");
-        string search = Console.ReadLine();
-        int flag = 0;
-        for (int j = 0; j < 3; j++)
-        {
-            if (contacts[j].Name == search)
-            {
-                flag = 1;
-                Console.WriteLine($"{contacts[j].Name} {contacts[j].Email} {contacts[j].PhoneNumber}");
-            }
-
-        }
-        if (flag == 0)
-        {
-            Console.WriteLine("Contact Not found");
-        }
-    }
-}*/
-
-/*public class Student
+﻿
+//Task 1
+/*class Product
 {
     public string Name { get; set; }
-    public int Age { get; set; }
-    public double Grade { get; set; }
-    public void DisplayDetails()
+    public int Price { get; set; }
+}
+interface ProductXML
+{
+    string toXml();
+}
+
+class Adapter : ProductXML
+{   
+   private readonly Product _product;
+   
+    public Adapter(Product product)
     {
-        Console.WriteLine($"{Name}");
-        Console.WriteLine($"{Age}");
-        Console.WriteLine($"{Grade}");
+        _product = product;
+    }
+
+    public string toXml()
+    {
+        return $"<product>\n  <name>{_product.Name}</name>\n  <price>{_product.Price}</price>\n</product>";
     }
 }
 
@@ -63,360 +29,54 @@ class Program
 {
     static void Main()
     {
-        Student[] students = new Student[3];
-        for (int i = 0; i < 3; i++)
+        Product product = new Product()
         {
-            students[i] = new Student();
-            Console.WriteLine($"Please input the {i + 1} student Name");
-            students[i].Name = Console.ReadLine();
-            Console.WriteLine($"please input the {i + 1} student Age");
-            students[i].Age = Convert.ToInt32( Console.ReadLine());
-            Console.WriteLine($"please input the {i + 1} student Grade");
-            students[i].Grade = Convert.ToDouble(Console.ReadLine());
-        }
-        for (int j = 0; j < 3; j++)
-        {
-            students[j].DisplayDetails();
-        }
+            Price = 10,
+            Name = "Banana"
+
+        };
+
+        ProductXML xML = new Adapter(product);
+        Console.Write(xML.toXml());
     }
+
 }*/
 
-/*public class BankAccount
-{
-    public int AccountNumber;
-    public string HolderName;
-    public int Balance;
+//Task 2
 
-    public BankAccount()
-    {
-        AccountNumber = 45514554;
-        HolderName = "Gagik";
-        Balance = 0;
-    }
-    public void Deposit(int amount)
-    {
-        Balance = Balance + amount;
-        Console.WriteLine($"your balance is {Balance}");
-    }
-
-    public void Withdraw(int amount)
-    {
-        if (Balance > 0)
-        {
-            if (Balance >= amount)
-            {
-                Balance -= amount;
-                Console.WriteLine($"your balance now is {Balance}");
-            }
-            else
-            {
-                Console.WriteLine("Your balance is not enough. Try again");
-            }
-        }
-    }
-}*/
-
-/*class Program
-{
-    static void Main()
-    {
-        BankAccount account = new BankAccount();
-        account.Withdraw(3000);
-        account.Deposit(1000);
-        
-
-    }
-}*/
-
-
-public class BookLibrary
-{
-    public string Title;
-    public string author;
-    public bool isAvailable;
-
-    public BookLibrary()
-    {
-        Title = "title";
-        author = "Author";
-        isAvailable = true;
-    }
-
-    private void showability()
-    {
-        if (isAvailable)
-        {
-            Console.WriteLine("You can borrow that book");
-            
-        }
-        else
-        {
-            Console.WriteLine("You can not borrow that book");
-        }
-    }
-    public void BorrowBook()
-    {
-       showability();
-       isAvailable = false;
-    }
-
-    public void ReturnBook()
-    {
-        isAvailable = true;
-        Console.WriteLine("Thank you for returning");
-    }
-    
-    }
-
-
-    class Program
-    {
-        static void Main()
-        {
-
-            BookLibrary[] bookLibrary = new BookLibrary[3];
-            for (int i = 0; i < 3; i++)
-            {
-                bookLibrary[i] = new BookLibrary();
-                Console.WriteLine($"please input {i + 1} book title");
-                bookLibrary[i].Title = Console.ReadLine();
-                Console.WriteLine($"please input {i + 1} book author");
-                bookLibrary[i].author = Console.ReadLine();
-            }
-
-        int flag;
-        bool chossing = true;
-        while(chossing)
-        {
-            flag = int.Parse(Console.Readline());
-            if(flag == 1)
-            {
-                
-                for (int i = 0; i < 3; ++i)
-                {
-                    int chose = Console.ReadLine();
-                    if(chose == i)
-                    {
-                        bookLibrary[i].BorrowBook();
-                    }
-                }
-            }
-        }
-
-    
-            
-            
-
-        }
-    }
-
-/*public class Employee
-{
-
-    public string Name;
-    public string position;
-    public int SalaryPerHour;
-    public int HoursWorked;
-
-
-    public int CalculateSalary()
-    {
-        if (HoursWorked < 40)
-        {
-            return HoursWorked * SalaryPerHour;
-        }
-        else
-        {
-            return ((int)(1.5 * (HoursWorked - 40) * SalaryPerHour) + 40 * SalaryPerHour);
-        }
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        Employee[] employees = new Employee[3];
-        for (int i = 0; i < 3; ++i)
-        {
-            employees[i] = new Employee();
-            Console.WriteLine($"please input {i + 1} employer's name");
-            employees[i].Name = Console.ReadLine();
-            Console.WriteLine($"please input {i + 1} employer's salary for hour");
-            employees[i].SalaryPerHour = Convert.ToInt32( Console.ReadLine() );
-            Console.WriteLine($"please input {i + 1} employer's hours of work");
-            employees[i].HoursWorked = Convert.ToInt32( Console.ReadLine() );
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            Console.WriteLine($"The salary of {i + 1} employee is {employees[i].CalculateSalary()}");
-        }
-    }
-}*/
-
-/*Task 7: Ticket Booking System
-Task: Create a MovieTicket class with :
-MovieName, SeatNumber, IsBooked.
-A method BookTicket() that marks it as booked.
-In Main(), create 5 seats, allow the user to book one, and prevent double booking.
-Show all available seats before booking.*/
-
-
-/*public class MovieTicket
-{
-    public string MovieName;
-    public int SeatNumber;
-    public bool IsBooked;
-
-    public void BookTicket()
-    {
-        if (IsBooked)
-        {
-            Console.WriteLine("That SeatNumber has already booked");
-        }
-        else
-        {
-            IsBooked = true;
-            Console.WriteLine("You booked that seat succesfully");
-        }
-    }
-    public void ShowAvailableseats()
-    {
-        if (!IsBooked)
-        {
-            Console.WriteLine($"You can book {SeatNumber} seat");
-        }
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        MovieTicket[] movieTickets = new MovieTicket[5];
-        for (int i = 0; i < 5; i++)
-        {
-            movieTickets[i] = new MovieTicket();
-            movieTickets[i].SeatNumber = i + 1;
-            movieTickets[i].ShowAvailableseats();
-        }
-        movieTickets[0].BookTicket();
-        Console.WriteLine("I want to seat first seat");
-        movieTickets[0].BookTicket();
-        Console.WriteLine("Okay, I want the second one");
-        movieTickets[1].BookTicket();
-
-    }
-}*/
-
-
-/*public class Student
+/*public class Product
 {
     public string Name { get; set; }
-    public int Age { get; set; }
-    public int grade { get; set; }
+    public int Price { get; set; }
 
-}
-public class Teacher
-{
-    public string Name { get; set; }
-    public string Subject { get; set; }
-    public int YearsOfExperience { get; set; }
+    public override string ToString()
+    {
+        return $"{Name} {Price}";
+    }
 }
 
-public class School
+public interface IProductProvider
 {
+    Product GetProduct();
+}
 
-    public Student[] students = new Student[3];
-    public Teacher[] teachers = new Teacher[3];
+public class CsvProductAdapter : IProductProvider
+{
+    private readonly string _cSV;
 
-    public void TopStudents()
+    public CsvProductAdapter(string cSV)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            if (students[i].grade > 8)
-            {
-                Console.WriteLine($"{students[i].Name}");
-            }
-        }
+        _cSV = cSV;
     }
 
-    public void TopTeachers()
+    public Product GetProduct()
     {
-        for (int i = 0; i < 3; i++)
-        {
-            if (teachers[i].YearsOfExperience > 2)
-            {
-                Console.WriteLine($"{teachers[i].Name}");
-            }
-        }
-    }
-
-    class Program
-    {
-        static void Main()
-        {
-            School school = new School();
-            for (int i = 0; i < 3; ++i)
-            {
-                school.students[i] = new Student();
-                school.students[i].Name = Console.ReadLine();
-                school.students[i].grade = Convert.ToInt32(Console.ReadLine());
-            }
+        Product product = new Product();
+        string[] strings = _cSV.Split(',');
+        product.Name = strings[0];
+        product.Price = int.Parse(strings[1]);
+        return product;
         
-            for (int i = 0;i < 3; i++)
-            {
-                school.teachers[i] = new Teacher();
-                Console.WriteLine($"Please input {i + 1} teacher name");
-                school.teachers[i].Name = Console.ReadLine();
-                Console.WriteLine("please input his/her experience");
-                school.teachers[i].YearsOfExperience = Convert.ToInt32(Console.ReadLine());
-            }
-            school.TopStudents();
-            school.TopTeachers();
-        }
-    }
-}*/
-
-
-/*public class Car
-{
-    public string Model;
-    public int Year;
-    public bool IsRented;
-
-    public Car()
-    {
-        Model = null;
-        Year = 0;
-        IsRented = false;
-    }
-
-    public void RentCar()
-    {
-        if (IsRented)
-        {
-            Console.WriteLine("You can not rent that car");
-
-        }
-        else
-        {
-            Console.WriteLine("You have sucsessfully rent this car");
-            IsRented = true;
-        }
-    }
-    public void ReturnCar()
-    {
-        if (IsRented)
-        {
-            Console.WriteLine("Thank you for returning the car.");
-            IsRented = false;
-        }
-        else
-        {
-            Console.WriteLine("This car was not rented, so it can't be returned.");
-        }
     }
 }
 
@@ -424,52 +84,139 @@ class Program
 {
     static void Main()
     {
-        Car[] cars = new Car[3];
-        for (int i = 0; i < 3; ++i)
-        {
-            cars[i] = new Car();
-            Console.WriteLine($"Please input {i + 1} car model");
-            cars[i].Model = Console.ReadLine();
-            Console.WriteLine("Please input this car's year");
-            cars[i].Year = Convert.ToInt32(Console.ReadLine());
-        }
-        Console.WriteLine("I want to rent the first car");
-        cars[0].RentCar();
-        Console.WriteLine("I want to rent this car again");
-        cars[0].RentCar();
-        Console.WriteLine("Thank you for car");
-        cars[0].ReturnCar();
         
+        string csv = "Barev,100";
+        IProductProvider provider = new CsvProductAdapter(csv);
+        Console.WriteLine(provider.GetProduct());
     }
 }*/
 
-/*Task 10: To - Do List Application
-Task: Create a TaskItem class with :
-Description, IsCompleted.
-Methods MarkComplete() and MarkIncomplete().
-Store multiple tasks in a list and allow users to add, remove, or mark tasks as complete*/
 
-/*public class TaskItem
+//Task 3
+
+/*public interface IPaymentProcessor
 {
-    public string Description;
-    public bool IsCompleted;
+    void PayMessage();
+}
 
-    public TaskItem()
+public class StripeProcessor : IPaymentProcessor
+{
+    public void PayMessage()
     {
-        this.IsCompleted = false;
-        this.Description = null;
+        Console.WriteLine("Stripe");
+    }
+}
+
+public class PayPalProcessor : IPaymentProcessor
+{
+    public void PayMessage()
+    {
+        Console.WriteLine("Pay pal");
+    }
+}
+
+public class CryptoWalletProcessor : IPaymentProcessor
+{
+    public void PayMessage()
+    {
+        Console.WriteLine("Crypto");
+    }
+}
+
+public abstract class Payment
+{
+    protected readonly IPaymentProcessor _processor;
+
+    public Payment(IPaymentProcessor processor)
+    {
+        _processor = processor;
     }
 
-    public void MarkComplete()
+    public abstract void PaymentMessage();
+}
+
+public class BasicPayment : Payment
+{
+    public BasicPayment(IPaymentProcessor processor) : base(processor) { }
+
+    public override void PaymentMessage()
     {
-        Console.WriteLine($"Thank you for completing {Description} task");
-        this.IsCompleted = true;
+        Console.WriteLine("BasicPayment");
+        _processor.PayMessage();
     }
 
-    public void MarkIncomplete()
+}
+
+public class SubscriptionPayment : Payment
+{
+    public SubscriptionPayment(IPaymentProcessor processor) : base(processor) { }
+
+    public override void PaymentMessage()
     {
-        IsCompleted = false;
-        Console.WriteLine($"{Description} task has not completed");
+        Console.WriteLine("SubscriptionPayment");
+        _processor.PayMessage();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        IPaymentProcessor processor = new PayPalProcessor();
+        Payment basic = new BasicPayment(processor);    
+        basic.PaymentMessage();
+    }
+}*/
+
+
+//Task 4
+/*using System.Threading.Tasks;
+
+public interface ITAskItem
+{
+    string getName();
+    void Display(string name);
+}
+
+public class SimpleTask : ITAskItem
+{
+    private string _name {  get; set; }
+    public SimpleTask(string name)
+    {
+        _name = name;
+    }
+    public string getName() { return _name; }
+    public void Display(string name)
+    {
+        Console.WriteLine($"{name} {_name}");
+    }
+
+}
+
+public class CompositeTask : ITAskItem
+{
+    public string getName() { return _name; }
+    private string _name { get; set; }
+    public CompositeTask(string name)
+    {
+        _name = name;
+    }
+    public List<ITAskItem> Tasks = new();
+
+    public void Add(ITAskItem item)
+    {
+        Tasks.Add(item);
+    }
+    public string GetName() { return _name; }
+
+    public void Display(string name)
+    {
+        Console.WriteLine(name);
+        foreach (var task in Tasks)
+        {
+            task.Display(name);
+        }
+
     }
 
 }
@@ -478,7 +225,181 @@ class Program
 {
     static void Main()
     {
-      
+        var task1 = new SimpleTask("Buy groceries");
+        var task2 = new SimpleTask("Call mom");
+        var task3 = new SimpleTask("Pay bills");
+
+        var personalTasks = new CompositeTask("Personal Tasks");
+        personalTasks.Add(task1);
+        personalTasks.Add(task2);
+        personalTasks.Add(task3);
+
+        var task4 = new SimpleTask("Fix login bug");
+        var task5 = new SimpleTask("Deploy new release");
+
+        var workTasks = new CompositeTask("Work Tasks");
+        workTasks.Add(task4);
+        workTasks.Add(task5);
+
+        var allTasks = new CompositeTask("All Tasks");
+        allTasks.Add(personalTasks);
+        allTasks.Add(workTasks);
+
+        allTasks.Display("");
     }
 }*/
 
+
+//Task 5
+
+using System.Reflection.Metadata;
+using System;
+
+/*public interface IDocument
+{
+    string GetContent();
+}
+
+public class PlainTextDocument : IDocument
+{   
+    public string GetContent() => "Plain doc";
+}
+
+public abstract class Decorator : IDocument
+{
+    protected IDocument document;
+    public Decorator(IDocument document)
+    {
+        this.document = document;
+    }
+    public virtual string GetContent() => document.GetContent();
+}
+
+public class BoldDecorator : Decorator
+{
+    public BoldDecorator(IDocument document) : base(document) { }
+
+    public override string GetContent()
+    {
+        return document.GetContent() + "Bold";
+    }
+}
+
+
+public class ItalicDecorator : Decorator
+{
+    public ItalicDecorator(IDocument document) : base(document) { }
+
+    public override string GetContent()
+    {
+        return document.GetContent() + "Italic";
+    }
+}
+
+
+public class UnderlineDecorator : Decorator
+{
+    public UnderlineDecorator(IDocument document) : base(document) { }
+
+    public override string GetContent()
+    {
+        return document.GetContent() + "Underline";
+    }
+}
+
+
+public class HighlightDecorator : Decorator
+{
+    public HighlightDecorator(IDocument document) : base(document) { }
+
+    public override string GetContent()
+    {
+        return document.GetContent() + "Highlight";
+    }
+}
+
+public class Program
+{
+    static void Main()
+    {
+       IDocument document = new PlainTextDocument();
+       document = new BoldDecorator(document);
+       document = new UnderlineDecorator(document);
+       document = new HighlightDecorator(document);
+       Console.WriteLine(document.GetContent());
+
+    }
+}*/
+
+
+//Task 6
+
+/*public class CPU
+{
+    public void Freeze()
+    {
+        Console.WriteLine("CPU Freezing");
+    }
+
+    public void Execute()
+    {
+        Console.WriteLine("CPU executing");
+    }
+}
+
+public class Memory
+{
+    public void Load()
+    {
+        Console.WriteLine("Memory is loading");
+    }
+}
+
+public class HardDrive
+{
+    public void Read()
+    {
+        Console.WriteLine("HardDrive reading sector 0 (size 1024)");
+    }
+}
+
+public class GPU
+{
+    public void Initalize()
+    {
+        Console.WriteLine("GPU initilazing");
+    }
+}
+
+public class ComputerFacade
+{
+    private CPU cpu;
+    private Memory memory;
+    private HardDrive hardware;
+    private GPU gpu;
+    public ComputerFacade(CPU cpu, Memory memory, HardDrive hardware, GPU gpu)
+    {
+        this.cpu = cpu;
+        this.memory = memory;
+        this.hardware = hardware;
+        this.gpu = gpu;
+    }
+
+    public void StartComputer()
+    {
+        cpu.Freeze();
+        cpu.Execute();
+        memory.Load();
+        hardware.Read();
+        gpu.Initalize();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        ComputerFacade computer = new ComputerFacade(new CPU(), new Memory(), new HardDrive(), new GPU());
+        computer.StartComputer();
+    }
+}*/
