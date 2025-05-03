@@ -1,398 +1,200 @@
-﻿//April 29
-
-//Task 1
-/*class Product
+﻿//Task 1, Chain of Responsibility
+/*public class SupportTicket
 {
-    public string Name { get; set; }
-    public int Price { get; set; }
-}
-interface ProductXML
-{
-    string toXml();
-}
+    public string IssueType;
+    public string Description;
 
-class Adapter : ProductXML
-{   
-   private readonly Product _product;
-   
-    public Adapter(Product product)
+    public SupportTicket(string issueType, string description)
     {
-        _product = product;
-    }
-
-    public string toXml()
-    {
-        return $"<product>\n  <name>{_product.Name}</name>\n  <price>{_product.Price}</price>\n</product>";
+        this.IssueType = issueType;
+        this.Description = description;
     }
 }
-
-class Program
+public abstract class SupportHandler
 {
-    static void Main()
+    protected SupportHandler next;
+    public void SetNext(SupportHandler next)
     {
-        Product product = new Product()
+        this.next = next;
+    }
+    public void Handle(SupportTicket ticket)
+    {
+        if (IsHandle(ticket))
         {
-            Price = 10,
-            Name = "Banana"
-
-        };
-
-        ProductXML xML = new Adapter(product);
-        Console.Write(xML.toXml());
-    }
-
-}*/
-
-//Task 2
-
-/*public class Product
-{
-    public string Name { get; set; }
-    public int Price { get; set; }
-
-    public override string ToString()
-    {
-        return $"{Name} {Price}";
-    }
-}
-
-public interface IProductProvider
-{
-    Product GetProduct();
-}
-
-public class CsvProductAdapter : IProductProvider
-{
-    private readonly string _cSV;
-
-    public CsvProductAdapter(string cSV)
-    {
-        _cSV = cSV;
-    }
-
-    public Product GetProduct()
-    {
-        Product product = new Product();
-        string[] strings = _cSV.Split(',');
-        product.Name = strings[0];
-        product.Price = int.Parse(strings[1]);
-        return product;
-        
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        
-        string csv = "Barev,100";
-        IProductProvider provider = new CsvProductAdapter(csv);
-        Console.WriteLine(provider.GetProduct());
-    }
-}*/
-
-
-//Task 3
-
-/*public interface IPaymentProcessor
-{
-    void PayMessage();
-}
-
-public class StripeProcessor : IPaymentProcessor
-{
-    public void PayMessage()
-    {
-        Console.WriteLine("Stripe");
-    }
-}
-
-public class PayPalProcessor : IPaymentProcessor
-{
-    public void PayMessage()
-    {
-        Console.WriteLine("Pay pal");
-    }
-}
-
-public class CryptoWalletProcessor : IPaymentProcessor
-{
-    public void PayMessage()
-    {
-        Console.WriteLine("Crypto");
-    }
-}
-
-public abstract class Payment
-{
-    protected readonly IPaymentProcessor _processor;
-
-    public Payment(IPaymentProcessor processor)
-    {
-        _processor = processor;
-    }
-
-    public abstract void PaymentMessage();
-}
-
-public class BasicPayment : Payment
-{
-    public BasicPayment(IPaymentProcessor processor) : base(processor) { }
-
-    public override void PaymentMessage()
-    {
-        Console.WriteLine("BasicPayment");
-        _processor.PayMessage();
-    }
-
-}
-
-public class SubscriptionPayment : Payment
-{
-    public SubscriptionPayment(IPaymentProcessor processor) : base(processor) { }
-
-    public override void PaymentMessage()
-    {
-        Console.WriteLine("SubscriptionPayment");
-        _processor.PayMessage();
-    }
-}
-
-class Program
-{
-    static void Main()
-    {
-        IPaymentProcessor processor = new PayPalProcessor();
-        Payment basic = new BasicPayment(processor);    
-        basic.PaymentMessage();
-    }
-}*/
-
-
-//Task 4
-/*using System.Threading.Tasks;
-
-public interface ITAskItem
-{
-    string getName();
-    void Display(string name);
-}
-
-public class SimpleTask : ITAskItem
-{
-    private string _name {  get; set; }
-    public SimpleTask(string name)
-    {
-        _name = name;
-    }
-    public string getName() { return _name; }
-    public void Display(string name)
-    {
-        Console.WriteLine($"{name} {_name}");
-    }
-
-}
-
-public class CompositeTask : ITAskItem
-{
-    public string getName() { return _name; }
-    private string _name { get; set; }
-    public CompositeTask(string name)
-    {
-        _name = name;
-    }
-    public List<ITAskItem> Tasks = new();
-
-    public void Add(ITAskItem item)
-    {
-        Tasks.Add(item);
-    }
-    public string GetName() { return _name; }
-
-    public void Display(string name)
-    {
-        Console.WriteLine(name);
-        foreach (var task in Tasks)
-        {
-            task.Display(name);
+            Process(ticket);
         }
-
+        else if (next != null)
+        {
+            next.Handle(ticket);
+        }
+        else
+        {
+            throw new InvalidOperationException();
+        }
     }
-
+    public abstract bool IsHandle(SupportTicket ticket);
+    public abstract void Process(SupportTicket ticket);
 }
 
-class Program
+public class BillingSupport : SupportHandler
 {
-    static void Main()
+    public override bool IsHandle(SupportTicket ticket)
     {
-        var task1 = new SimpleTask("Buy groceries");
-        var task2 = new SimpleTask("Call mom");
-        var task3 = new SimpleTask("Pay bills");
-
-        var personalTasks = new CompositeTask("Personal Tasks");
-        personalTasks.Add(task1);
-        personalTasks.Add(task2);
-        personalTasks.Add(task3);
-
-        var task4 = new SimpleTask("Fix login bug");
-        var task5 = new SimpleTask("Deploy new release");
-
-        var workTasks = new CompositeTask("Work Tasks");
-        workTasks.Add(task4);
-        workTasks.Add(task5);
-
-        var allTasks = new CompositeTask("All Tasks");
-        allTasks.Add(personalTasks);
-        allTasks.Add(workTasks);
-
-        allTasks.Display("");
+        if (ticket.IssueType == "Billing") { return true; }
+        return false;
     }
-}*/
 
-
-//Task 5
-
-using System.Reflection.Metadata;
-using System;
-
-/*public interface IDocument
-{
-    string GetContent();
-}
-
-public class PlainTextDocument : IDocument
-{   
-    public string GetContent() => "Plain doc";
-}
-
-public abstract class Decorator : IDocument
-{
-    protected IDocument document;
-    public Decorator(IDocument document)
+    public override void Process(SupportTicket ticket)
     {
-        this.document = document;
+        Console.WriteLine($"{ticket.Description}");
     }
-    public virtual string GetContent() => document.GetContent();
+
 }
 
-public class BoldDecorator : Decorator
+public class TechnicalSupport : SupportHandler
 {
-    public BoldDecorator(IDocument document) : base(document) { }
-
-    public override string GetContent()
+    public override bool IsHandle(SupportTicket ticket)
     {
-        return document.GetContent() + "Bold";
+        if (ticket.IssueType == "Technical") { return true; }
+        return false;
     }
+
+    public override void Process(SupportTicket ticket)
+    {
+        Console.WriteLine($"{ticket.Description}");
+    }
+
 }
 
-
-public class ItalicDecorator : Decorator
+public class GeneralSupport : SupportHandler
 {
-    public ItalicDecorator(IDocument document) : base(document) { }
-
-    public override string GetContent()
+    public override bool IsHandle(SupportTicket ticket)
     {
-        return document.GetContent() + "Italic";
+        if (ticket.IssueType == "General") { return true; }
+        return false;
     }
-}
 
-
-public class UnderlineDecorator : Decorator
-{
-    public UnderlineDecorator(IDocument document) : base(document) { }
-
-    public override string GetContent()
+    public override void Process(SupportTicket ticket)
     {
-        return document.GetContent() + "Underline";
+        Console.WriteLine($"{ticket.Description}");
     }
-}
 
-
-public class HighlightDecorator : Decorator
-{
-    public HighlightDecorator(IDocument document) : base(document) { }
-
-    public override string GetContent()
-    {
-        return document.GetContent() + "Highlight";
-    }
 }
 
 public class Program
 {
     static void Main()
     {
-       IDocument document = new PlainTextDocument();
-       document = new BoldDecorator(document);
-       document = new UnderlineDecorator(document);
-       document = new HighlightDecorator(document);
-       Console.WriteLine(document.GetContent());
+        var billing = new BillingSupport();
+        var tech = new TechnicalSupport();
+        var gen = new GeneralSupport();
 
+        billing.SetNext( tech );
+        tech.SetNext( gen );
+        var ticket1 = new SupportTicket("Billing", "Refund for last month's invoice.");
+        var ticket2 = new SupportTicket("Technical", "App crashes when I login.");
+        var ticket3 = new SupportTicket("General", "My package hasn't arrived.");
+        var ticket4 = new SupportTicket("unknown", "I need help but don’t know who to ask.");
+        
+        billing.Handle(ticket1);
     }
 }*/
 
 
-//Task 6
+//Task 2, Command
 
-/*public class CPU
+using System.Net;
+using System.Security.Principal;
+
+/*public class BankAccount
 {
-    public void Freeze()
+    public BankAccount(string name,int balance)
     {
-        Console.WriteLine("CPU Freezing");
+        this.Balance = balance;
+        this.Name = name;
+    }
+    public BankAccount() { }
+    public string Name { get; set; }
+    public int Balance { get; set; }
+    public void WithDraw(int amount)
+    {
+        if(Balance >= amount)
+        {
+            Balance -= amount;
+        }
+        else
+        {
+            Console.WriteLine("Can not do withdraw");
+        }
     }
 
+    public void Deposit(int amount)
+    {
+        Balance += amount;
+    }
+
+}
+public interface ITransactionCommand
+{
+    void Execute();
+    void Undo();
+}
+
+class WithdrawCommand : ITransactionCommand
+{
+    private readonly BankAccount bankAccount;
+    int amount;
+    public WithdrawCommand(BankAccount bankAccount,int amount)
+    {
+        this.bankAccount = bankAccount;
+        this.amount = amount;
+    }
     public void Execute()
     {
-        Console.WriteLine("CPU executing");
+        bankAccount.WithDraw(amount);
+    }
+    public void Undo()
+    {
+        bankAccount.Deposit(amount);
     }
 }
 
-public class Memory
+public class DepositCommand : ITransactionCommand
 {
-    public void Load()
+    private readonly BankAccount bankAccount;
+    int amount;
+    public DepositCommand(BankAccount bankAccount, int amount)
     {
-        Console.WriteLine("Memory is loading");
+        this.bankAccount = bankAccount;
+        this.amount = amount;
+
+    }
+    public void Execute()
+    {
+        bankAccount.Deposit(amount);
+    }
+    public void Undo()
+    {
+        bankAccount.WithDraw(amount);
     }
 }
 
-public class HardDrive
+class Invoker
 {
-    public void Read()
+    private readonly BankAccount account;
+    private ITransactionCommand _lastCommand;
+    Stack<ITransactionCommand> _transactions = new();
+    public void PressButton(ITransactionCommand command)
     {
-        Console.WriteLine("HardDrive reading sector 0 (size 1024)");
-    }
-}
-
-public class GPU
-{
-    public void Initalize()
-    {
-        Console.WriteLine("GPU initilazing");
-    }
-}
-
-public class ComputerFacade
-{
-    private CPU cpu;
-    private Memory memory;
-    private HardDrive hardware;
-    private GPU gpu;
-    public ComputerFacade(CPU cpu, Memory memory, HardDrive hardware, GPU gpu)
-    {
-        this.cpu = cpu;
-        this.memory = memory;
-        this.hardware = hardware;
-        this.gpu = gpu;
+        _lastCommand = command;
+        command.Execute();
+        _transactions.Push(command);
     }
 
-    public void StartComputer()
+    public void PressUndo()
     {
-        cpu.Freeze();
-        cpu.Execute();
-        memory.Load();
-        hardware.Read();
-        gpu.Initalize();
+        var last = _transactions.Pop();
+        last.Undo();
     }
 }
 
@@ -400,7 +202,275 @@ class Program
 {
     static void Main()
     {
-        ComputerFacade computer = new ComputerFacade(new CPU(), new Memory(), new HardDrive(), new GPU());
-        computer.StartComputer();
+        var Account = new BankAccount("Aram",2000);
+        var deposit = new DepositCommand(Account, 200);
+        var withdraw = new WithdrawCommand(Account, 150);
+        var invoker = new Invoker();
+        invoker.PressButton(withdraw);
+        invoker.PressButton(deposit);
+        invoker.PressButton(withdraw);
+        invoker.PressUndo();
+        invoker.PressUndo();
+        
+        Console.WriteLine($"{Account.Balance}");
+
+    }
+}*/
+
+
+//Task 3, Memento
+
+/*public class EmployeeProfile
+{
+    public string Name { get; set; }
+    public string Position { get; set; }
+    public double Salary { get; set; }
+
+    public EmployeeProfile(string name, string position, double salary)
+    {
+        Name = name; Position = position; Salary = salary;
+    }
+
+    public void Promote(string newPosition, double newSalary)
+    {
+        Position = newPosition;
+        Salary = newSalary;
+    }
+    public EmployeeMemento CreateMemento() {  return new EmployeeMemento(Name,Position,Salary); }
+    public void Restore(EmployeeMemento memento)
+    {
+        Name = memento.Name;
+        Position = memento.Position;
+        Salary = memento.Salary;
+    }
+    public override string ToString()
+    {
+        return $"{Name} {Position} {Salary}";
+    }
+
+
+}
+public class EmployeeMemento
+{
+    public string Name;
+    public string Position;
+    public double Salary;
+    public EmployeeMemento(string name,  string position, double salary)
+    {
+        Name = name ; Position = position ; Salary = salary ;
+    }
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        var profile = new EmployeeProfile("Anna", "Junior Developer", 40000);
+
+        // Save initial version
+        var v1 = profile.CreateMemento();
+
+        profile.Promote("Mid Developer", 60000);
+        var v2 = profile.CreateMemento();
+
+        profile.Promote("Senior Developer", 80000);
+        Console.WriteLine("🟢 Current: " + profile);
+
+        // Reset to v2 (Mid Developer)
+        profile.Restore(v2);
+        Console.WriteLine("🟡 Restored to Mid: " + profile);
+
+        // Reset to v1 (Junior Developer)
+        profile.Restore(v1);
+        Console.WriteLine("🔵 Restored to Junior: " + profile);
+    }
+}*/
+
+//Task 5, Strategy
+
+/*public class User
+{
+    public string Name { get; set; }
+    public string Password { get; set; }
+    public string PhoneNumber { get; set; }
+    public string FaceId { get; set; }
+}
+public interface IAuthentication
+{
+    bool Authenticate(User user);
+}
+
+class PasswordAuthStrategt : IAuthentication
+{
+    private readonly string _password;
+    public PasswordAuthStrategt(string password)
+    {
+        _password = password;
+    }
+
+    public bool Authenticate(User user)
+    {
+        return user.Password == _password;
+    }
+}
+
+class OtpAuthStrategy : IAuthentication
+{
+    private int _code;
+    public OtpAuthStrategy(int code)
+    {
+        _code = code;
+    }
+
+    public bool Authenticate(User user)
+    {
+        return _code == 1456;
+    }
+
+}
+
+class AuthService
+{
+    User user = new User();
+    IAuthentication _authentication;
+
+    public AuthService(IAuthentication authentication, User user)
+    {
+        _authentication = authentication;
+        this.user = user;
+    }
+
+    public bool Authenticate(User user)
+    {
+        return _authentication.Authenticate(user);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        var user = new User
+        {
+            Name = "Anna",
+            Password = "1234",
+            PhoneNumber = "099123456",
+            FaceId = "face-xyz"
+        };
+
+        var passwordAuth = new PasswordAuthStrategt("1234");
+        var authService = new AuthService(passwordAuth, user);
+
+        bool isAuthenticated = authService.Authenticate(user);
+        Console.WriteLine(isAuthenticated ? "Login successful" : "Login failed");
+    }
+}*/
+
+
+//Task 6, Visitor
+
+/*public interface IProduct
+{
+    void Accept(IDiscountVisitor visitor);
+    decimal Price { get; }
+    string Name { get; }
+}
+
+public interface IDiscountVisitor
+{
+    void Visit(Book product);
+    void Visit(Electronics product);
+    void Visit(Clothing product);
+}
+
+public class Book : IProduct
+{
+    public decimal Price { get; set; }
+    public string Name { get; set; }
+    public Book(decimal price,string name)
+    {
+        Price = price;
+        Name = name;
+    }
+
+    public void Accept(IDiscountVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+
+
+}
+
+public class Electronics : IProduct
+{
+    public decimal Price { get; set; }
+    public string Name { get; set; }
+    public Electronics(decimal price, string name)
+    {
+        Price = price;
+        Name = name;
+    }
+
+    public void Accept(IDiscountVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+}
+
+public class Clothing : IProduct
+{
+    public decimal Price { get; set; }
+    public string Name { get; set; }
+    public Clothing(decimal price, string name)
+    {
+        Price = price;
+        Name = name;
+    }
+
+        public void Accept(IDiscountVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+
+}
+
+public class HolidayDiscountVisitor : IDiscountVisitor
+{
+    public void Visit(Book product)
+    {
+        double dis = (double)product.Price * 0.9;
+        Console.WriteLine($"Book {product.Name} Original:{product.Price} -> Discounted {dis}");
+    }
+    public void Visit(Electronics product)
+    {
+        double dis = (double)product.Price * 0.85;
+        Console.WriteLine($"Book {product.Name} Original:{product.Price} -> Discounted {dis}");
+    }
+    public void Visit(Clothing product)
+    {
+        double dis = (double)product.Price * 0.75;
+        Console.WriteLine($"Book {product.Name} Original:{product.Price} -> Discounted {dis}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        List<IProduct> cart = new()
+{
+    new Book(40,"Design Patterns"),
+    new Electronics(120,"Headphones"),
+    new Clothing(80,"Jacket")
+};
+
+        IDiscountVisitor holidaySale = new HolidayDiscountVisitor();
+
+        foreach (var item in cart)
+        {
+            item.Accept(holidaySale);
+        }
+
     }
 }*/
