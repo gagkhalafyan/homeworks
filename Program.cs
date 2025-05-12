@@ -1,122 +1,78 @@
 ﻿
-using System;
-using Linq_2;
-class Program
+public class Program
 {
-    static void Main()
+    static object _locker = new object();
+    static int Max = 10;
+    static List<int> ints = new List<int>();
+    static List<int> result = new List<int>();  
+    static Random random = new Random();
+
+    public static void Main()
     {
-        var departments = new List<Department>
-{
-    new Department(1, "Computer Science"),
-    new Department(2, "Mathematics"),
-    new Department(3, "Physics")
-};
+        Thread thread1 = new Thread(Producer);
+        Thread thread2 = new Thread(Consumer);
 
-        var courses = new List<Course>
-{
-    new Course(101, "Algorithms", 1),
-    new Course(102, "Data Structures", 1),
-    new Course(201, "Calculus", 2),
-    new Course(301, "Quantum Mechanics",3),
-    new Course(104, "Algorithm", 1),
-    new Course(105, "Data Structure", 1),
-    new Course(207, "Calculue", 2),
-    new Course(302, "Quantum Mechanich",3)
-};
+        thread1.Start();
+        thread2.Start();
 
-        var students = new List<Student>
-{
-    new Student(22,1, "Arman Hakobyan", 1, new List<int> { 101, 102 }),
-    new Student(19,2, "Mariam Sargsyan", 1, new List<int> { 201 }),
-    new Student(25,3, "Gor Petrosyan", 3, new List<int> { 301 })
-};
+        thread1.Join();
+        thread2.Join();
 
-        var subjects = new List<Subject>
-{
-
-    new Subject { Name = "Programming Basics", DepartmentId = 1 },
-    new Subject { Name = "Data Structures", DepartmentId = 1 },
-    new Subject { Name = "Operating Systems", DepartmentId = 1 },
-    new Subject { Name = "Databases", DepartmentId = 1 },
-
-    new Subject { Name = "Linear Algebra", DepartmentId = 2 },
-    new Subject { Name = "Calculus I", DepartmentId = 2 },
-    new Subject { Name = "Probability Theory", DepartmentId = 2 },
-
-    new Subject { Name = "Classical Mechanics", DepartmentId = 3 },
-    new Subject { Name = "Electromagnetism", DepartmentId = 3 },
-    new Subject { Name = "Quantum Physics", DepartmentId = 3 }
-};
-
-
-        //Task 1
-
-        var res = (from department in departments
-                   where department.Name == "Computer Science"
-                   select department.Id).SingleOrDefault();
-
-        var result = from student in students
-                     where student.DepartmentId.Equals(res)
-                     select student.FullName;
-        Console.WriteLine("Computer Science students:");
-        foreach (var s in result)
+        foreach (int i in result)
         {
-            Console.WriteLine(s);
+            Console.WriteLine(i);
         }
-        Console.WriteLine();
+    }
 
-        //Task 3
-
-        var res3 = from subject in subjects
-                   where subject.DepartmentId.Equals(res)
-                   select subject.Name;
-
-        Console.WriteLine("Subjects in Computer Science:");
-        foreach (var s in res3)
+    public static void Producer()
+    {
+        for (int i = 0; i < 5; i++)
         {
-            Console.WriteLine(s);
+            lock (_locker)
+            {
+
+                while (ints.Count > 0)
+                {
+                    Monitor.Wait(_locker);
+                }
+
+                Console.WriteLine("Producer is adding numbers");
+                for (int j = 0; j < Max; j++)
+                {
+                    int num = random.Next(100);
+                    ints.Add(num);
+                    Thread.Sleep(1000);
+                    Console.Write(" " + num + " ");
+                }
+                Console.WriteLine();
+                Console.WriteLine("Producer added numbers");
+                Monitor.Pulse(_locker);
+            }
+
         }
-        Console.WriteLine();
+    }
 
-        //Task 4
-
-        var res4 = from department in departments
-                   join student in students
-                   on department.Id equals student.DepartmentId
-                   group department by department.Name into DeptGroup
-                   where DeptGroup.Count() > 1
-                   select DeptGroup.Key;
-
-        foreach (var s in res4)
+    public static void Consumer()
+    {
+        for (int i = 0; i < 5; i++)
         {
-            Console.WriteLine(s);
+          lock (_locker)
+            {
+                if(ints.Count < Max)
+                {
+                    Monitor.Wait(_locker);
+
+                }
+
+                int sum = ints.Sum();
+                result.Add(sum);
+                Console.WriteLine($"The sum is {sum}");
+
+                ints.Clear();
+                Monitor.Pulse(_locker);
+            }
+           
         }
-
-        //Task 5
-
-        var res5 = (from student in students
-                   join department in departments
-                   on student.Id equals department.Id
-                   orderby student.Age
-                   select student.DepartmentId).First();
-
-        Console.WriteLine(res5);
-
-        //Task 6
-
-        var res6 = (from subject in subjects
-                   group subject by subject.DepartmentId into g
-                   let count = g.Count()
-                   orderby count descending
-                   select new { DepartmentId = g.Key, Count = count }).FirstOrDefault();
-
-        var departmentName = (from d in departments
-                              where d.Id == res6.DepartmentId
-                              select d.Name).FirstOrDefault();
-
-        Console.WriteLine($"{departmentName} ({res6.Count})");
-
-
     }
 }
 
